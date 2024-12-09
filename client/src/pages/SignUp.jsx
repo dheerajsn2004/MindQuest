@@ -46,7 +46,7 @@ const SignUp = () => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <section>
-        <h1 className="text-center pb-5 text-4xl font-mono underline">
+        <h1 className="text-center pb-5 text-4xl font-mono">
           MindQuest{" "}
         </h1>
         <form

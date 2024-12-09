@@ -11,6 +11,7 @@ import toast from 'react-hot-toast'
 
 
 const LogIn = () => {
+  
 
   const [hidePassword, setHidePassword] = useState(true)
   const [loading, setLoading] = useState(false);
@@ -37,13 +38,13 @@ const LogIn = () => {
   return (
     <div className='min-h-screen flex items-center justify-center '>
       <section>
-        <h1 className='text-center pb-5 text-4xl font-mono underline'>MindQuest </h1>
+        <h1 className='text-orange-400 text-center pb-5 text-4xl font-mono'>MindQuest </h1>
         <form
           onSubmit={handleSubmit(submitHandler)}
           className='flex flex-col gap-y-3 max-w-[480px] shadow-lg shadow-blue-300  border p-10 rounded-lg'
         >
           <div>
-            <h3 className='text-4xl pb-5 text-center leading-[1.125]'>
+            <h3 className='text-orange-400 text-4xl pb-5 text-center leading-[1.125]'>
               Log in to Your Account
             </h3>
           </div>

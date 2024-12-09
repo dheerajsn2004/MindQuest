@@ -82,7 +82,7 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
     return (
         <div className='flex py-5 border min-h-[70vh] px-5 justify-center items-start mt-5 rounded-lg bg-slate-900 border-slate-600'>
             {!quizStarted ? (
-                <Button className='w-max self-center' onClick={startQuiz}>Start Quiz</Button>
+                <Button className='h-16 w-32 text-lg self-center' onClick={startQuiz}>Start Quiz</Button>
             ) : (
                 <div className='w-full flex flex-col'>
                     <h2 className='border border-slate-600 py-2 px-3 rounded-lg text-center md:text-end'>Time Remaining: <span className='text-red-500 ml-2'>{formatTime(remainingTime)}</span></h2>
