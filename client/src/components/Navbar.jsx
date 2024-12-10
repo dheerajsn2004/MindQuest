@@ -7,6 +7,7 @@ const Navbar = () => {
             <Link to={"/"} className='text-3xl font-bold font-mono'>
                 MindQuest
             </Link>
+            
             <div className='flex gap-5'>
                 <NavLink to={"/"} className={({ isActive }) => isActive === true ? "text-green-600" : "text-white"}>
                     Home

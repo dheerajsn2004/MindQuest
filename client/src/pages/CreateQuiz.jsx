@@ -12,7 +12,11 @@ import { IoMdArrowForward } from "react-icons/io";
 const CreateQuiz = () => {
 
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm({
+    defaultValues: {
+      timer: 5, // Set the default value for the timer field
+    },
+  });
   const { token } = useSelector((state) => state.auth);
   const { edit, quiz } = useSelector((state) => state.quiz);
   const location = useLocation();

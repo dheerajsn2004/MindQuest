@@ -94,7 +94,7 @@ const LogIn = () => {
           </span>
 
           <span className='mt-5'>
-            <Button disabled={loading} varient={"primary"} type={"submit"}>Submit</Button>
+            <Button className='py-3' disabled={loading} varient={"primary"} type={"submit"}>Log In</Button>
           </span>
 
           <p className='text-center mt-3'>Don't have an account? <span onClick={() => navigate("/signup")} className=' cursor-pointer text-green-500'>Sign Up</span></p>

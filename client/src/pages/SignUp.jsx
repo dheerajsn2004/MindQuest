@@ -172,8 +172,8 @@ const SignUp = () => {
           </span>
 
           <span className="">
-            <Button disabled={loading} varient={"primary"} type={"submit"}>
-              Submit
+            <Button className='py-3' disabled={loading} varient={"primary"} type={"submit"}>
+              Sign Up
             </Button>
           </span>
 

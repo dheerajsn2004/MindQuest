@@ -80,25 +80,38 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
     };
 
     return (
-        <div className='flex py-5 border min-h-[70vh] px-5 justify-center items-start mt-5 rounded-lg bg-slate-900 border-slate-600'>
-            {!quizStarted ? (
-                <Button className='h-16 w-32 text-lg self-center' onClick={startQuiz}>Start Quiz</Button>
-            ) : (
-                <div className='w-full flex flex-col'>
-                    <h2 className='border border-slate-600 py-2 px-3 rounded-lg text-center md:text-end'>Time Remaining: <span className='text-red-500 ml-2'>{formatTime(remainingTime)}</span></h2>
-                    <div className='min-h-[50vh]'>
-                        {quizQuestions && quizQuestions.map((ques) => (
-                            <QuestionCard
-                                key={ques._id}
-                                question={ques}
-                                onAnswerChange={handleAnswerChange}
-                            />
-                        ))}
-                    </div>
-                    <Button className='w-max self-end' onClick={submitQuiz}>Submit</Button>
-                </div>
-            )}
-        </div>
+      <div className="flex py-5 border min-h-[70vh] px-5 justify-center items-start mt-5 rounded-lg bg-slate-900 border-slate-600">
+        {!quizStarted ? (
+          <Button className="h-16 w-max text-lg self-center" onClick={startQuiz}>
+            Start Quiz
+          </Button>
+        ) : (
+          <div className="w-full flex flex-col">
+            <h2 className="border border-slate-600 py-2 px-3 rounded-lg text-center md:text-end">
+              Time Remaining:{" "}
+              <span className="text-red-500 ml-2">
+                {formatTime(remainingTime)}
+              </span>
+            </h2>
+            <div className="min-h-[50vh]">
+              {quizQuestions &&
+                quizQuestions.map((ques) => (
+                  <QuestionCard
+                    key={ques._id}
+                    question={ques}
+                    onAnswerChange={handleAnswerChange}
+                  />
+                ))}
+            </div>
+            <Button
+              className="w-32 h-16 text-lg self-center mt-5"
+              onClick={submitQuiz}
+            >
+              Submit
+            </Button>
+          </div>
+        )}
+      </div>
     );
 };
 

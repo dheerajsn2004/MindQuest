@@ -1,26 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const QuestionCard = React.memo(({ question, onAnswerChange }) => {
-    const handleOptionChange = (event) => {
-        onAnswerChange(question._id, event.target.value);
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    const handleOptionChange = (optionId) => {
+        setSelectedOption(optionId);
+        onAnswerChange(question._id, optionId);
     };
 
     return (
-        <div className='border border-slate-600 bg-slate-800 w-full p-3 rounded-lg my-3 '>
-            <h3 className='border-b pb-3 mb-3 border-slate-600'>{question.questionText} </h3>
-            <span className='flex flex-col md:flex-row justify-evenly gap-5'>
+        <div className="border border-slate-600 bg-slate-800 w-full p-3 rounded-lg my-3">
+            <h3 className="border-b pb-3 mb-3 border-slate-600">{question.questionText}</h3>
+            <div className="flex flex-wrap justify-center gap-5">
                 {question.options.map((option) => (
-                    <label key={option._id} className='flex gap-3 cursor-pointer items-center'>
+                    <label
+                        key={option._id}
+                        className={`flex items-center justify-center w-[45%] p-3 border rounded-lg cursor-pointer transition-all ${
+                            selectedOption === option._id
+                                ? 'bg-green-500 text-white border-green-600'
+                                : 'bg-slate-700 text-slate-300 border-slate-600 hover:bg-slate-600'
+                        }`}
+                        onClick={() => handleOptionChange(option._id)}
+                    >
                         <input
-                            type='radio'
+                            type="radio"
                             name={question._id}
                             value={option._id}
-                            onChange={handleOptionChange}
+                            className="hidden"
                         />
-                        {option.text}
+                        <span className="text-center">{option.text}</span>
                     </label>
                 ))}
-            </span>
+            </div>
         </div>
     );
 });
