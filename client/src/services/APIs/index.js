@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3005/api/v1";
+const BASE_URL = "https://mindquest-qrh5.onrender.com";
 
 export const authEndpoints = {
   SIGNUP: `${BASE_URL}/register`,
