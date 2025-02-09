@@ -25,7 +25,7 @@ const HomePage = () => {
             className="absolute top-1 sm:top-1 right-3 sm:right-3 w-25 sm:w-25 h-16 sm:h-16 border-2 border-white"
           />
           <h1 className="relative  top-16 sm:top-16  title text-3xl sm:text-5xl font-bold text-white drop-shadow-lg">
-            Welcome to <span className="brand-name text-yellow-400">MindQuest</span>
+            Welcome to <span className="brand-name text-yellow-400">Electronika'25</span>
           </h1>
           <p className="relative  top-16 sm:top-16 subtitle text-lg sm:text-2xl mt-2 text-gray-200">
             Test your knowledge, unlock your potential!
