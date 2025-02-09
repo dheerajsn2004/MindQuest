@@ -2,8 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Homepage.css';
 
-
-
 const HomePage = () => {
   const navigate = useNavigate(); // React Router hook for navigation
 
@@ -14,23 +12,29 @@ const HomePage = () => {
         Your browser does not support the video tag.
       </video>
 
-      <div className="container">
-        <div className="hero-section">
+      <div className="container flex flex-col items-center justify-center text-center p-4 sm:p-8">
+        <div className="hero-section relative w-full max-w-5xl">
           <img
             src="/images/IEEE_Logo.jpg"
             alt="Logo"
-            className="absolute top-10 left-20 w-40 h-40 rounded-full border-2 border-white"
+            className="absolute top-1 sm:top-2 left-3 sm:left-12 w-8 sm:w-16 h-8 sm:h-16 rounded-full border-2 border-white"
           />
-          <img src="/images/ieeelogo.png" alt="ieeelogo" className="absolute top-16 right-20 w-40 h-35 border-2 border-white"/>
-          <h1 className="title">
-            Welcome to <span className="brand-name">MindQuest</span>
+          <img 
+            src="/images/ieeelogo.png" 
+            alt="ieeelogo" 
+            className="absolute top-1 sm:top-2 right-3 sm:right-12 w-8 sm:w-16 h-8 sm:h-16 border-1 border-blue"
+          />
+          <h1 className="title text-3xl sm:text-5xl font-bold text-white drop-shadow-lg">
+            Welcome to <span className="brand-name text-yellow-400">MindQuest</span>
           </h1>
-          <p className="subtitle">
+          <p className="subtitle text-lg sm:text-2xl mt-2 text-gray-200">
             Test your knowledge, unlock your potential!
           </p>
-          <div className="button-container">
-            {/* Navigate to Register Page on click */}
-            <button className="register-btn" onClick={() => navigate("/login")}>
+          <div className="button-container mt-4">
+            <button 
+              className="register-btn bg-yellow-400 text-white px-6 py-3 rounded-full text-lg sm:text-xl font-semibold hover:bg-yellow-500 transition-transform transform hover:scale-105"
+              onClick={() => navigate("/login")}
+            >
               Get Started
             </button>
           </div>

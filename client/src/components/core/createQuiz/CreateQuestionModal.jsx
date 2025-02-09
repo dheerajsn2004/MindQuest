@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../../Button';
 import { IoAdd, IoClose } from "react-icons/io5";
-import { apiConnector } from '../../../services/apiConnector';
 import { createQuestion } from '../../../services/operations/questionAPIs';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -23,7 +22,7 @@ const CreateQuestionModal = ({ quiz, setQuestions, setCreateQuestionModalData })
     }
 
     if (!options.some(option => option.isCorrect)) {
-      setOptionError("There must be at least one correct option.");
+      setOptionError("At least one option must be correct.");
       return;
     }
 
@@ -33,27 +32,31 @@ const CreateQuestionModal = ({ quiz, setQuestions, setCreateQuestionModalData })
 
     try {
       const response = await createQuestion(data, token);
-
       if (response) {
         setQuestions(prevQuestions => [...prevQuestions, response]);
         setCreateQuestionModalData(null);
       }
     } catch (e) {
-      console.log("ERROR WHILE CREATING THE QUESTION:", e);
+      console.error("ERROR WHILE CREATING THE QUESTION:", e);
       toast.error("Question cannot be created");
     } finally {
       setLoading(false);
     }
   };
 
-  const addOption = () => {
-    if (isCurrentOptionCorrect && options.some(option => option.isCorrect)) {
-      alert("There can be only one correct option.");
+  const addOption = useCallback(() => {
+    if (!currentOption.trim()) {
+      setOptionError("Option text cannot be empty.");
       return;
     }
 
-    if (!currentOption.trim()) {
-      setOptionError("Option text cannot be empty.");
+    if (options.some(opt => opt.text === currentOption.trim())) {
+      setOptionError("This option already exists.");
+      return;
+    }
+
+    if (isCurrentOptionCorrect && options.some(option => option.isCorrect)) {
+      setOptionError("Only one correct option is allowed.");
       return;
     }
 
@@ -61,77 +64,75 @@ const CreateQuestionModal = ({ quiz, setQuestions, setCreateQuestionModalData })
     setOptionError('');
     setCurrentOption('');
     setIsCurrentOptionCorrect(false);
-  };
+  }, [currentOption, isCurrentOptionCorrect, options]);
 
-  const removeOption = (index) => {
-    setOptions(options.filter((_, i) => i !== index));
-  };
+  const removeOption = useCallback((index) => {
+    setOptions(prevOptions => prevOptions.filter((_, i) => i !== index));
+  }, []);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-  <div className='max-w-[640px] w-full mx-auto p-5 gap-10 flex flex-col items-center bg-slate-800 shadow-lg shadow-slate-600 rounded-lg border border-slate-600'>
-    <h3 className='text-3xl'>Create a question</h3>
-    <form onSubmit={handleSubmit(submitHandler)} className='w-full flex flex-col gap-5'>
+      <div className='max-w-[640px] w-full mx-auto p-5 flex flex-col bg-slate-800 shadow-lg rounded-lg border border-slate-600'>
+        <h3 className='text-3xl text-center'>Create a Question</h3>
+        <form onSubmit={handleSubmit(submitHandler)} className='w-full flex flex-col gap-5'>
 
-      <span className='flex flex-col gap-3'>
-        <label htmlFor="questionText">Enter Question</label>
-        <input
-          type="text"
-          placeholder='Enter Question here'
-          className='py-1 text-base placeholder:text-black text-slate-950 rounded-lg px-3 outline-none bg-slate-300 xl:text-xl'
-          {...register("questionText", {
-            required: "Question is required",
-          })}
-        />
-        {errors.questionText && <p className='text-red-500'>{errors.questionText.message}</p>}
-      </span>
+          <label className="flex flex-col gap-2">
+            Enter Question
+            <input
+              type="text"
+              placeholder='Enter Question here'
+              className='py-2 px-3 bg-slate-300 rounded-lg outline-none text-black text-lg'
+              {...register("questionText", { required: "Question is required" })}
+            />
+            {errors.questionText && <p className='text-red-500'>{errors.questionText.message}</p>}
+          </label>
 
-      <span className='flex flex-col gap-3'>
-        <label htmlFor="options">Add Options</label>
-        <span className='flex items-center flex-col gap-2'>
-          <input
-            type="text"
-            placeholder='Create Options'
-            className='py-1 text-base w-full placeholder:text-black text-slate-950 rounded-lg px-3 outline-none bg-slate-300 xl:text-xl'
-            value={currentOption}
-            onChange={(e) => setCurrentOption(e.target.value)}
-          />
-          <span className='flex items-center gap-2 self-start justify-between w-full'>
-            <span className='space-x-2'>
+          <label className="flex flex-col gap-2">
+            Add Options
+            <div className="flex items-center gap-3">
+              <input
+                type="text"
+                placeholder='Enter an option'
+                className='py-2 px-3 bg-slate-300 rounded-lg outline-none text-black text-lg w-full'
+                value={currentOption}
+                onChange={(e) => setCurrentOption(e.target.value)}
+              />
               <input
                 type="checkbox"
-                name="isCorrect"
-                id="isCorrect"
                 checked={isCurrentOptionCorrect}
                 onChange={() => setIsCurrentOptionCorrect(!isCurrentOptionCorrect)}
               />
-              <label htmlFor="isCorrect">Correct option?</label>
-            </span>
-            <button onClick={addOption} className='p-2 text-lg flex gap-1 items-center' type='button'><IoAdd /> Add</button>
-          </span>
-        </span>
-      </span>
+              <label>Correct?</label>
+              <button onClick={addOption} type='button' className='p-2 bg-blue-500 text-white rounded-lg'>
+                <IoAdd />
+              </button>
+            </div>
+          </label>
 
-      <span className='flex flex-col gap-1'>
-        {options.map((option, index) => (
-          <div key={index} className='flex gap-2 items-center'>
-            <p>{option.text}</p>
-            {option.isCorrect && <span className='text-green-500'>(Correct)</span>}
-            <button type='button' onClick={() => removeOption(index)} className='text-red-500'><IoClose /></button>
+          {options.length > 0 && (
+            <div className="flex flex-col gap-2">
+              {options.map((option, index) => (
+                <div key={index} className='flex items-center justify-between bg-gray-700 p-2 rounded-md'>
+                  <p className='text-white'>{option.text}</p>
+                  {option.isCorrect && <span className='text-green-500'>(Correct)</span>}
+                  <button onClick={() => removeOption(index)} className='text-red-500'>
+                    <IoClose />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {optionError && <p className='text-red-500'>{optionError}</p>}
+
+          <div className='flex justify-end gap-3'>
+            <Button onClick={() => setCreateQuestionModalData(null)} className='w-max h-max' active={false}>Cancel</Button>
+            <Button type="submit" disabled={loading} className='w-max h-max' active>Create</Button>
           </div>
-        ))}
-      </span>
 
-      {optionError && <p className='text-red-500'>{optionError}</p>}
-
-      <span className='flex justify-end w-full gap-3'>
-        <Button onClick={() => setCreateQuestionModalData(null)} className='w-max h-max' active={false}>Cancel</Button>
-        <Button type="submit" disabled={loading} className='w-max h-max' active>Create</Button>
-      </span>
-
-    </form>
-  </div>
-</div>
+        </form>
+      </div>
+    </div>
   );
 };
 
