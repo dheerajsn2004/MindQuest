@@ -42,7 +42,7 @@ const HomePage = () => {
       </div>
       <p className="footer">
   © {new Date().getFullYear()} Powered by{" "}
-  <span className="brand-name text-yellow-400"></span>  AWS |  All Rights Reserved to AR
+  <span className="brand-name text-yellow-400"></span>  AWS | V S Code |  All Rights Reserved to AR
 
 </p>
 
