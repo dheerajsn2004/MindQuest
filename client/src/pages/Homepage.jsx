@@ -22,8 +22,8 @@ const HomePage = () => {
           <img 
             src="/images/ieeelogo.png" 
             alt="ieeelogo" 
-            className="absolute top-1 sm:top-1 right-3 sm:right-3 w-20 sm:w-16 h-16 sm:h-16 border-1 border-blue"
-          /><p sm:text-1>aws</p>
+            className="absolute top-1 sm:top-1 right-3 sm:right-3 w-25 sm:w-25 h-16 sm:h-16 border-2 border-white"
+          />
           <h1 className="relative  top-16 sm:top-16  title text-3xl sm:text-5xl font-bold text-white drop-shadow-lg">
             Welcome to <span className="brand-name text-yellow-400">MindQuest</span>
           </h1>
@@ -40,6 +40,12 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <p className="footer">
+  © {new Date().getFullYear()} Powered by{" "}
+  <span className="brand-name text-yellow-400"></span>  AWS |  All Rights Reserved to AR
+
+</p>
+
     </div>
   );
 };
