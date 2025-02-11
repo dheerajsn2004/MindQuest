@@ -12,17 +12,17 @@ const HomePage = () => {
         Your browser does not support the video tag.
       </video>
 
-      <div className="container flex flex-col items-center justify-center text-center p-4 sm:p-8">
+      <div className="container flex flex-col items-center justify-center text-center py-10  sm:py-10 px-1">
         <div className="hero-section relative w-full max-w-5xl">
           <img
-            src="/images/IEEE_Logo.jpg"
+            src="/images/IEEE_Logo.png"
             alt="Logo"
-            className="absolute top-1 sm:top-1 left-3 sm:left-3 w-8 sm:w-16 h-8 sm:h-16 rounded-full border-2 border-white"
+            className="absolute top-4 sm:top-1 left-9 sm:left-10 sm:w-16 h-8 px-4 py- 1"
           />
           <img 
             src="/images/ieeelogo.png" 
             alt="ieeelogo" 
-            className="absolute top-1 sm:top-1 right-3 sm:right-3 w-25 sm:w-25 h-16 sm:h-16 border-2 border-white"
+            className="absolute top-1 right-0  px-0.1 py-1"
           />
           <h1 className="relative  top-16 sm:top-16  title text-3xl sm:text-5xl font-bold text-white drop-shadow-lg">
             Welcome to <span className="brand-name text-yellow-400">Electronika'25</span>
@@ -42,12 +42,8 @@ const HomePage = () => {
       </div>
       <p className="footer">
   © {new Date().getFullYear()} Powered by{" "}
-  <span className="brand-name text-yellow-400"></span>  AWS and V S Code|  All Rights Reserved to [AR]
-
-</p>
-
+  <span className="brand-name text-yellow-400"></span>All Rights Reserved to NISB</p>
     </div>
   );
 };
-
 export default HomePage;

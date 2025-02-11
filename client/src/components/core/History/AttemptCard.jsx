@@ -33,13 +33,13 @@ const AttemptCard = ({ item }) => {
                     </span>
                 </h3>
             </div>
-
+            {/* navigate(`../../quiz/${item?.quizId?._id}`) */}
             {/* Attempt Again Button */}
             <Button 
-                onClick={() => navigate(`../../quiz/${item?.quizId?._id}`)} 
+                onClick={() =>'#'} 
                 className="w-full mt-2"
             >
-                Attempt Again
+                Attempted
             </Button>
         </div>
     );

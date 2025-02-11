@@ -84,8 +84,8 @@ const LogIn = () => {
           </span>
 
           {/* Submit Button */}
-          <span className='mt-5'>
-            <Button className='py-3' disabled={loading} variant={"primary"} type="submit">
+          <span className='mt-3 '>
+            <Button className='py-2 px-40 ' disabled={loading} variant={"primary"} type="submit">
               {loading ? "Logging in..." : "Log In"}
             </Button>
           </span>

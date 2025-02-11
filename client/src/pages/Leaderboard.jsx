@@ -24,12 +24,12 @@ const Leaderboard = () => {
         );
 
         if (!response.data.success) {
-          throw new Error(response.data.message || "Failed to fetch data");
+          console.log(response.data.message || "Failed to fetch data");
         }
 
         setQuizzes(response.data.data);
       } catch (error) {
-        setError(error.message || "Couldn't get leaderboard data");
+        console.log(error.message || "Couldn't get leaderboard data");
       } finally {
         setLoading(false);
       }

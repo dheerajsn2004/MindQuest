@@ -18,56 +18,62 @@
 
 /* Container for content */
 .container {
-    position: relative;
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 2rem;
+    padding: 1%;
     color: #fff;
     font-family: 'Roboto', sans-serif;
     z-index: 1;
+    width: 100%;
 }
 
 /* Hero Section */
 .hero-section {
-    width: 120%;
-    max-width: 300%;
-    padding: 2%;
+    width: 200%;
+    max-width: 400%;
+    padding: 1%;
 }
 
 /* Logos */
 .hero-section img {
     position: absolute;
-    width: 12%;
-    height: 25%;
+    width: 18%;
+    height: 18%;
     border-radius: 50%;
-    border: 2% solid rgba(241, 229, 229, 0.726);
-    margin-bottom: 5%;
+    border: 4% solid rgba(241, 229, 229, 0.726);
+    margin-bottom: 1%;
+    margin-left: 15%;
+    margin-right: 10%;
 }
 
 @media (max-width: 100%) {
 
     .hero-section img {
         border: 2% solid rgba(241, 229, 229, 0.726);
-        width: 80%;
-        height: 80%;
+        width: 320%;
+        height: 100%;
+        max-width: 100%;
     }
 }
 
 /* Title Styling */
 .title {
-    margin-top: 12rem;
+    margin-top: 20%;
+    margin-left: 25%;
     font-size: 2.5rem;
     font-weight: bold;
-    margin-bottom: 1rem;
+    margin-bottom: 2%;
     color: #e74c3c;
     animation: fadeIn 1s forwards 0.5s;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 20%) {
     .title {
+        margin-left: 25%;
         font-size: 1.8rem;
     }
 }
@@ -81,11 +87,12 @@
 .subtitle {
     font-size: 1.5rem;
     color: #101111;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
     animation: fadeIn 1s forwards 1s;
+    margin-left: 25%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 100%) {
     .subtitle {
         font-size: 1rem;
     }
@@ -103,6 +110,7 @@
     background-color: #f39c12;
     color: #fff;
     margin-top: 1rem;
+    margin-left: 25%;
 }
 
 .register-btn:hover {

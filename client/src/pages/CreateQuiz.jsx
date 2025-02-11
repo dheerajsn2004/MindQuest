@@ -40,11 +40,11 @@ const CreateQuiz = () => {
         navigate(`/dashboard/create-quiz/${response._id}`);
         toast.success("Quiz Created Successfully");
       } else {
-        throw new Error("Quiz cannot be created at this moment");
+        console.log("Quiz cannot be created at this moment");
       }
     } catch (e) {
       console.log(e);
-      toast.error("Quiz cannot be created at this moment");
+      // toast.error("Quiz cannot be created at this moment");
     } finally {
       setLoading(false);
     }

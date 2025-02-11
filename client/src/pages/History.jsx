@@ -18,13 +18,13 @@ const History = () => {
       });
 
       if (!response.data.success) {
-        throw new Error(response.data.error);
+        console.log(response.data.error);
       }
 
       setAttempts(response?.data?.data || []);
     } catch (error) {
-      console.error('Error fetching user attempts:', error.message);
-      toast.error('Failed to get user attempts');
+      console.log('Error fetching user attempts:', error.message);
+      console.log('Failed to get user attempts');
     } finally {
       setLoading(false);
     }

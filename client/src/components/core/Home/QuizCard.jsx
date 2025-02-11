@@ -34,9 +34,9 @@ const QuizCard = ({ quiz }) => {
       <Link
         className="mt-4 py-1 px-2 rounded block text-center transition-colors duration-200 
                    text-white bg-green-500 hover:bg-orange-500"
-        to={`/quiz/${quiz._id}${attempted ? "/leaderboard" : ""}`}
+        to={attempted ? "/dashboard" : "/quiz/${quiz._id}${attempted"}
       >
-        {attempted ? "Leaderboard" : "Attempt Now"}
+        {attempted ? "Attempted" : "Attempt Now"}
       </Link>
 
       {/* Completed Badge */}
