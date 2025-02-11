@@ -62,19 +62,21 @@
 
 /* Title Styling */
 .title {
-    margin-top: 20%;
-    margin-left: 25%;
-    font-size: 2.5rem;
+    margin-top: 16%;
+    margin-left: 18%;
+    font-size: 2%;
     font-weight: bold;
     margin-bottom: 2%;
     color: #e74c3c;
+    justify-content: center;
+    
     animation: fadeIn 1s forwards 0.5s;
 }
 
 @media (max-width: 20%) {
     .title {
-        margin-left: 25%;
-        font-size: 1.8rem;
+        margin-left: 2%;
+        font-size: 1%;
     }
 }
 
@@ -85,11 +87,11 @@
 
 /* Subtitle */
 .subtitle {
-    font-size: 1.5rem;
+    font-size: 1.5%;
     color: #101111;
     margin-bottom: 2%;
     animation: fadeIn 1s forwards 1s;
-    margin-left: 25%;
+    margin-left: 20%;
 }
 
 @media (max-width: 100%) {
@@ -110,7 +112,7 @@
     background-color: #f39c12;
     color: #fff;
     margin-top: 1rem;
-    margin-left: 25%;
+    margin-left: 20%;
 }
 
 .register-btn:hover {
