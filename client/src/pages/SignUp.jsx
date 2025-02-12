@@ -181,7 +181,7 @@ const SignUp = () => {
 
           {/* Sign Up Button */}
           <span>
-            <Button className="py-3" disabled={loading} varient="primary" type="submit">
+            <Button className="py-3 px-36" disabled={loading} varient="primary" type="submit">
               {loading ? "Signing Up..." : "Sign Up"}
             </Button>
           </span>
