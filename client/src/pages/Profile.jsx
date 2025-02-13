@@ -33,8 +33,8 @@ const Profile = () => {
 
       <div className='w-full min-h-[50vh] grid place-content-center'>
         <p className="text-center text-gray-400">Manage your profile details here.</p>
-        <Button onClick={() => navigate('/')} className='px-10 flex gap-2 items-center py-2'>
-          <FaHome /> Return to Home
+        <Button onClick={() => navigate('/')} className='px-8 flex gap-4 items-center py-1'>
+          <FaHome />     Return to Home
         </Button>
       </div>
     </section>

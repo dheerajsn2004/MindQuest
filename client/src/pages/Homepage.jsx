@@ -1,49 +1,47 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Homepage.css';
 
 const HomePage = () => {
   const navigate = useNavigate(); // React Router hook for navigation
 
   return (
-    <div className="video-container">
-      <video className="background-video" autoPlay loop muted playsInline>
-        <source src="/images/video.mp4?bhubijjiou" type="video/mp4" />
+    <div className="relative w-full h-screen overflow-hidden">
+      <video className="absolute top-0 left-0 w-full h-full object-cover z-[-1]" autoPlay loop muted playsInline>
+        <source src="/images/video.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
-      <div className="container flex flex-col items-center justify-center text-center py-10  sm:py-10 px-1">
-        <div className="hero-section relative w-full max-w-5xl">
-          <img
-            src="/images/IEEE_Logo.png"
-            alt="Logo"
-            className="absolute top-4 sm:top-1 left-9 sm:left-10 sm:w-16 h-8 px-4 py- 1"
-          />
-          <img 
-            src="/images/ieeelogo.png" 
-            alt="ieeelogo" 
-            className="absolute top-1 right-0  px-0.1 py-1"
-          />
-          <h1 className="relative  top-16 sm:top-16  title text-3xl sm:text-5xl font-bold text-white drop-shadow-lg">
-            Welcome to <span className="brand-name text-yellow-400">Electronika'25</span>
-          </h1>
-          <p className="relative  top-16 sm:top-16 subtitle text-lg sm:text-2xl mt-2 text-gray-200">
-            Test your knowledge, unlock your potential!
-          </p>
-          <div className="relative  top-16 sm:top-16 button-container mt-4">
-            <button 
-              className="register-btn bg-yellow-400 text-white px-6 py-3 rounded-full text-lg sm:text-xl font-semibold hover:bg-yellow-500 transition-transform transform hover:scale-105"
-              onClick={() => navigate("/login")}
-            >
-              Get Started
-            </button>
-          </div>
-        </div>
+      <img
+        src="/images/IEEE_Logo.png"
+        alt="Logo"
+        className="absolute top-4 left-4 sm:top-6 sm:left-6 w-10 sm:w-12 md:w-16 lg:w-20"
+      />
+      <img
+        src="/images/ieeelogo.png"
+        alt="ieeelogo"
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 sm:w-16 md:w-16 lg:w-20"
+      />
+
+      <div className="flex flex-col items-center justify-center text-center h-full px-4">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white drop-shadow-md">
+          Welcome to <span className="text-yellow-400">Electronika'25</span>
+        </h1>
+        <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mt-4">
+          Test your knowledge, unlock your potential!
+        </p>
+        <button
+          className="mt-6 bg-yellow-400 text-white px-6 py-3 rounded-full text-lg sm:text-xl font-semibold hover:bg-yellow-500 transition-transform transform hover:scale-105"
+          onClick={() => navigate("/login")}
+        >
+          Get Started
+        </button>
       </div>
-      <p className="footer">
-  © {new Date().getFullYear()} Powered by{" "}
-  <span className="brand-name text-yellow-400"></span>All Rights Reserved to NISB</p>
+
+      <footer className="absolute bottom-2 left-0 w-full text-center text-gray-300 text-xs sm:text-sm md:text-base">
+        © {new Date().getFullYear()} Powered by <span className="text-yellow-400">AWS ,VS code</span> All Rights Reserved
+      </footer>
     </div>
   );
 };
+
 export default HomePage;
