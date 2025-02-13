@@ -38,7 +38,7 @@ const HomePage = () => {
       </div>
 
       <footer className="absolute bottom-2 left-0 w-full text-center text-gray-300 text-xs sm:text-sm md:text-base">
-        © {new Date().getFullYear()} Powered by <span className="text-yellow-400">AWS ,VS code</span> All Rights Reserved
+        © {new Date().getFullYear()} Powered by <span className="text-yellow-400">NISB</span> All Rights Reserved
       </footer>
     </div>
   );
