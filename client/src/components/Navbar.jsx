@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <div className='flex flex-col sm:flex-row items-center justify-between py-3 px-4 sm:px-6'>
             <Link to={"/"} className='text-xl sm:text-3xl font-bold font-mono'>
-                Electronika'25
+            Quartic
             </Link>
             
             <div className='flex gap-3 sm:gap-5 mt-2 sm:mt-0'>
