@@ -24,7 +24,7 @@ const HomePage = () => {
 
       <div className="flex flex-col items-center justify-center text-center h-full px-4">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white drop-shadow-md">
-          Welcome to <span className="text-yellow-400">Quartic</span>
+          Welcome to <span className="text-yellow-400">Electronica 22.0</span>
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mt-4">
           Test your knowledge, unlock your potential!
