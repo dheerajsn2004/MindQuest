@@ -59,8 +59,7 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
       const response = await apiConnector(
         "POST",
         `${quizEndpoints.ATTEMMP_QUIZ}/${quizDetails._id}/attempt`,
-        { quizId: quizDetails._id, answers: answersArray },
-        { Authorization: `Bearer ${token}` }
+        { quizId: quizDetails._id, answers: answersArray }
       );
 
       if (response?.data?.score !== undefined) {

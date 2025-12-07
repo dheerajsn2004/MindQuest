@@ -15,9 +15,7 @@ const Score = ({ quiz }) => {
       try {
         const response = await apiConnector(
           "GET",
-          `${quizEndpoints.GET_SCORES}/${quiz._id}`,
-          null,
-          { Authorization: `Bearer ${token}` }
+          `${quizEndpoints.GET_SCORES}/${quiz._id}`
         );
         setScores(response?.data?.data || []);
       } catch (err) {

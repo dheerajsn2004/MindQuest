@@ -13,9 +13,7 @@ const History = () => {
   const fetchUserAttempts = async () => {
     setLoading(true);
     try {
-      const response = await apiConnector('GET', quizEndpoints.GET_USER_ATTEMPS, null, {
-        Authorization: `Bearer ${token}`,
-      });
+      const response = await apiConnector('GET', quizEndpoints.GET_USER_ATTEMPS);
 
       if (!response.data.success) {
         console.log(response.data.error);

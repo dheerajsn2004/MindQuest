@@ -27,9 +27,7 @@ const AdminQuizes = () => {
 
     const fetchAdminQuizes = async () => {
         try {
-            const response = await apiConnector("GET", quizEndpoints.GET_ADMIN_QUIZES, null, {
-                Authorization: `Bearer ${token}`
-            });
+            const response = await apiConnector("GET", quizEndpoints.GET_ADMIN_QUIZES);
             setQuizes(response?.data?.data);
         } catch (error) {
             console.error('Error fetching admin quizes:', error);

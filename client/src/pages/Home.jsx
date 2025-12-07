@@ -12,9 +12,7 @@ const Home = () => {
   const fetchQuizzes = async () => {
     setLoading(true);
     try {
-      const response = await apiConnector('GET', quizEndpoints.GET_ALL_QUIZES, null, {
-        Authorization: `Bearer ${token}`,
-      });
+      const response = await apiConnector('GET', quizEndpoints.GET_ALL_QUIZES);
 
       if (!response.data.success) {
         throw new Error(response.data.message);

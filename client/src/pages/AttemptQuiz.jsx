@@ -19,8 +19,8 @@ const AttemptQuiz = () => {
         setLoading(true);
         try {
             const [detailsResponse, questionsResponse] = await Promise.all([
-                apiConnector("GET", `${quizEndpoints.GET_QUIZ_DETAILS}/${quizId}`, null, { Authorization: `Bearer ${token}` }),
-                apiConnector("GET", `${questionEndpoints.GET_QUIZ_QUESTIONS}/${quizId}`, null, { Authorization: `Bearer ${token}` })
+                apiConnector("GET", `${quizEndpoints.GET_QUIZ_DETAILS}/${quizId}`),
+                apiConnector("GET", `${questionEndpoints.GET_QUIZ_QUESTIONS}/${quizId}`)
             ]);
 
             setQuizDetails(detailsResponse?.data?.data);

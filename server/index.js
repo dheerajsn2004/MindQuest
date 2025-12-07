@@ -16,13 +16,18 @@ database.connectToDB();
 app.use(express.json());
 app.use(cookieParser());
 
-// Simple CORS - allow everything for development
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+// CORS configuration - must be before routes
+app.use(cors({
+  origin: true,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
+
+// Handle preflight for all routes
+app.options('*', cors());
 
 app.get("/", (req, res) => {
   res.json({
@@ -34,6 +39,22 @@ app.get("/", (req, res) => {
 app.use("/api/v1/", routes);
 
 // activate server
-app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`App is running on port ${PORT}`);
+  console.log(`Server listening on http://localhost:${PORT}`);
+});
+
+server.on('error', (error) => {
+  console.error('❌ Server Error:', error);
+  if (error.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use`);
+  }
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught Exception:', error);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection:', reason);
 });

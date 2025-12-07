@@ -19,8 +19,7 @@ const Leaderboard = () => {
         const response = await apiConnector(
           "POST",
           quizEndpoints.GET_LEADERBOARD,
-          { id: quizId },
-          { Authorization: `Bearer ${token}` }
+          { id: quizId }
         );
 
         if (!response.data.success) {

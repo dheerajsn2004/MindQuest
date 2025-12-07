@@ -43,9 +43,7 @@ const CreateQuestions = () => {
     const fetchQuestions = async () => {
         setLoading(true)
         try {
-            const response = await apiConnector("GET", `${questionEndpoints.GET_QUIZ_QUESTIONS}/${id}`, null, {
-                Authorization: `Bearer ${token}`
-            })
+            const response = await apiConnector("GET", `${questionEndpoints.GET_QUIZ_QUESTIONS}/${id}`)
             // console.log("response : ", response)
             if (response) {
                 setQuestions(response?.data?.data);
