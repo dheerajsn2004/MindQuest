@@ -15,12 +15,57 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Generate a unique key for this quiz attempt
+  const storageKey = `quiz_attempt_${quizDetails?._id}`;
+
+  // Load saved state on component mount
   useEffect(() => {
-    if (quizDetails?.timer) {
+    if (!quizDetails) return;
+
+    const savedState = localStorage.getItem(storageKey);
+    if (savedState) {
+      try {
+        const { started, timeRemaining, answers, timestamp } = JSON.parse(savedState);
+        
+        // Calculate elapsed time since last save
+        const elapsedSeconds = Math.floor((Date.now() - timestamp) / 1000);
+        const adjustedTime = Math.max(0, timeRemaining - elapsedSeconds);
+
+        if (adjustedTime > 0) {
+          setQuizStarted(started);
+          setRemainingTime(adjustedTime);
+          setUserAnswers(answers);
+        } else {
+          // Time expired while away, clear storage and auto-submit
+          localStorage.removeItem(storageKey);
+          setRemainingTime(0);
+          setQuizStarted(true);
+        }
+      } catch (error) {
+        console.error("Error loading saved quiz state:", error);
+        // If corrupted, start fresh
+        localStorage.removeItem(storageKey);
+        setRemainingTime(quizDetails.timer * 60);
+      }
+    } else if (quizDetails?.timer) {
       setRemainingTime(quizDetails.timer * 60);
     }
   }, [quizDetails]);
 
+  // Save state to localStorage whenever it changes
+  useEffect(() => {
+    if (quizStarted && quizDetails) {
+      const stateToSave = {
+        started: quizStarted,
+        timeRemaining: remainingTime,
+        answers: userAnswers,
+        timestamp: Date.now()
+      };
+      localStorage.setItem(storageKey, JSON.stringify(stateToSave));
+    }
+  }, [quizStarted, remainingTime, userAnswers, quizDetails]);
+
+  // Timer effect
   useEffect(() => {
     let timer;
     if (quizStarted && remainingTime > 0) {
@@ -33,6 +78,20 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
       submitQuiz();
     }
     return () => clearInterval(timer);
+  }, [quizStarted, remainingTime]);
+
+  // Add beforeunload warning to prevent accidental page close
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (quizStarted && remainingTime > 0) {
+        e.preventDefault();
+        e.returnValue = "You have a quiz in progress. Your progress will be saved if you refresh.";
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [quizStarted, remainingTime]);
 
   const handleAnswerChange = useCallback((questionId, selectedOption) => {
@@ -63,6 +122,9 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
       );
 
       if (response?.data?.score !== undefined) {
+        // Clear saved state after successful submission
+        localStorage.removeItem(storageKey);
+        
         dispatch(
           setUser({
             ...user,
@@ -99,7 +161,12 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
           <div className="min-h-[50vh]">
             {quizQuestions &&
               quizQuestions.map((ques) => (
-                <QuestionCard key={ques._id} question={ques} onAnswerChange={handleAnswerChange} />
+                <QuestionCard 
+                  key={ques._id} 
+                  question={ques} 
+                  onAnswerChange={handleAnswerChange}
+                  initialAnswer={userAnswers[ques._id]}
+                />
               ))}
           </div>
           <Button

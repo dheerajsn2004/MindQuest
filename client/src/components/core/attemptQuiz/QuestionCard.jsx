@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const QuestionCard = React.memo(({ question, onAnswerChange }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+const QuestionCard = React.memo(({ question, onAnswerChange, initialAnswer }) => {
+  const [selectedOption, setSelectedOption] = useState(initialAnswer || null);
+
+  // Update when initialAnswer changes (e.g., after loading from localStorage)
+  useEffect(() => {
+    if (initialAnswer) {
+      setSelectedOption(initialAnswer);
+    }
+  }, [initialAnswer]);
 
   const handleOptionChange = (optionId) => {
     setSelectedOption(optionId);
