@@ -18,8 +18,9 @@ export const signUp = async (data) => {
     toast.success("Signed Up Successfully");
     return true;
   } catch (e) {
-    console.log("ERROR WHILE SINGING UP : ", e);
-    toast.error(e?.response?.data?.error);
+    console.log("ERROR WHILE SIGNING UP : ", e);
+    const errorMessage = e?.response?.data?.error || e?.message || "Signup failed. Please try again.";
+    toast.error(errorMessage);
   }
   return false;
 };
@@ -43,7 +44,8 @@ export const login = async (data, dispatch) => {
     return true;
   } catch (e) {
     console.log("ERROR WHILE LOGGING IN : ", e);
-    toast.error(e.response.data.error);
+    const errorMessage = e?.response?.data?.error || e?.message || "Login failed. Please try again.";
+    toast.error(errorMessage);
   }
   return false;
 };
