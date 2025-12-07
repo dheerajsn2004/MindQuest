@@ -12,8 +12,35 @@ const CreateQuestionModal = ({ quiz, setQuestions, setCreateQuestionModalData })
   const [currentOption, setCurrentOption] = useState('');
   const [isCurrentOptionCorrect, setIsCurrentOptionCorrect] = useState(false);
   const [optionError, setOptionError] = useState('');
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { token } = useSelector(state => state.auth);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 1024 * 1024) {
+        toast.error('Image must be less than 1MB');
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please select an image file');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageFile(reader.result);
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+  };
 
   const submitHandler = async (data) => {
     if (options.length < 4) {
@@ -29,6 +56,9 @@ const CreateQuestionModal = ({ quiz, setQuestions, setCreateQuestionModalData })
     setLoading(true);
     data.options = options;
     data.quizId = quiz._id;
+    if (imageFile) {
+      data.questionImage = imageFile;
+    }
 
     try {
       const response = await createQuestion(data, token);
@@ -71,9 +101,9 @@ const CreateQuestionModal = ({ quiz, setQuestions, setCreateQuestionModalData })
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className='max-w-[640px] w-full mx-auto p-5 flex flex-col bg-slate-800 shadow-lg rounded-lg border border-slate-600'>
-        <h3 className='text-3xl text-center'>Create a Question</h3>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 overflow-y-auto">
+      <div className='max-w-[640px] w-full mx-auto my-8 p-5 flex flex-col bg-slate-800 shadow-lg rounded-lg border border-slate-600 max-h-[90vh] overflow-y-auto'>
+        <h3 className='text-3xl text-center mb-5'>Create a Question</h3>
         <form onSubmit={handleSubmit(submitHandler)} className='w-full flex flex-col gap-5'>
 
           <label className="flex flex-col gap-2">
@@ -86,6 +116,30 @@ const CreateQuestionModal = ({ quiz, setQuestions, setCreateQuestionModalData })
             />
             {errors.questionText && <p className='text-red-500'>{errors.questionText.message}</p>}
           </label>
+
+          <label className="flex flex-col gap-2">
+            Upload Question Image (Optional)
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className='py-2 px-3 bg-slate-300 rounded-lg text-black file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-slate-600 file:text-white hover:file:bg-slate-700 cursor-pointer'
+            />
+            <span className='text-xs text-gray-400'>Max size: 1MB | JPG, PNG, GIF</span>
+          </label>
+
+          {imagePreview && (
+            <div className="relative border border-slate-600 rounded-lg p-3 bg-slate-700">
+              <img src={imagePreview} alt="Preview" className="max-h-48 w-full object-contain rounded" />
+              <button
+                type="button"
+                onClick={removeImage}
+                className="absolute top-1 right-1 bg-red-500 text-white p-1.5 rounded-full hover:bg-red-600"
+              >
+                <IoClose size={20} />
+              </button>
+            </div>
+          )}
 
           <label className="flex flex-col gap-2">
             Add Options

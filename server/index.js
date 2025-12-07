@@ -13,7 +13,8 @@ const PORT = process.env.PORT || 4000;
 // connect to db
 database.connectToDB();
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
 
 // CORS configuration - must be before routes

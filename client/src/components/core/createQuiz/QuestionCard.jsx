@@ -9,6 +9,17 @@ const QuestionCard = ({ question, deleteQuestionHandler }) => {
         <h4 className='text-xl font-semibold break-words'>{question.questionText}</h4>
       </span>
 
+      {/* Question Image */}
+      {question.questionImage && (
+        <div className='flex justify-center py-3 bg-slate-800 rounded-lg'>
+          <img 
+            src={question.questionImage} 
+            alt="Question" 
+            className="max-w-full max-h-64 object-contain rounded"
+          />
+        </div>
+      )}
+
       {/* Options Section */}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
         {question.options.map((option, index) => (

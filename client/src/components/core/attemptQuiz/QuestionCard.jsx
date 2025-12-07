@@ -20,6 +20,15 @@ const QuestionCard = React.memo(({ question, onAnswerChange, initialAnswer }) =>
       <h3 className="border-b pb-3 mb-3 border-slate-600 text-lg font-semibold">
         {question.questionText}
       </h3>
+      {question.questionImage && (
+        <div className="mb-4 flex justify-center bg-slate-700 p-2 rounded-lg">
+          <img 
+            src={question.questionImage} 
+            alt="Question" 
+            className="max-w-full max-h-80 object-contain rounded"
+          />
+        </div>
+      )}
       <div className="flex flex-wrap justify-center gap-4">
         {question.options.map((option) => (
           <label

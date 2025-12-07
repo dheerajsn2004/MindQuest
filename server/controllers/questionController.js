@@ -3,7 +3,7 @@ const Question = require("../models/Question");
 // ✅
 exports.createQuestion = async (req, res) => {
   try {
-    const { questionText, options, quizId } = req.body;
+    const { questionText, options, quizId, questionImage } = req.body;
 
     if (!questionText || !options) {
       return res.status(400).json({
@@ -32,11 +32,17 @@ exports.createQuestion = async (req, res) => {
       }
     }
 
-    const requstion = await Question.create({
+    const questionData = {
       quizId,
       questionText,
       options,
-    });
+    };
+
+    if (questionImage) {
+      questionData.questionImage = questionImage;
+    }
+
+    const requstion = await Question.create(questionData);
 
     return res.status(201).json({
       success: true,
@@ -55,7 +61,7 @@ exports.createQuestion = async (req, res) => {
 // ✅
 exports.updateQuestion = async (req, res) => {
   try {
-    const { questionText, options } = req.body;
+    const { questionText, options, questionImage } = req.body;
     const { id } = req.params;
 
     // Check for required fields
@@ -87,10 +93,15 @@ exports.updateQuestion = async (req, res) => {
       }
     }
 
+    const updateData = { questionText, options };
+    if (questionImage !== undefined) {
+      updateData.questionImage = questionImage;
+    }
+
     // Update the question
     const question = await Question.findByIdAndUpdate(
       id,
-      { questionText, options },
+      updateData,
       { new: true }
     );
 
