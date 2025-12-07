@@ -74,8 +74,9 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
       }, 1000);
     } else if (quizStarted && remainingTime === 0) {
       clearInterval(timer);
-      alert("Time is up!");
-      submitQuiz();
+      localStorage.removeItem(storageKey);
+      alert("⏰ Time's Up! Your quiz will be submitted automatically.");
+      submitQuiz(true);
     }
     return () => clearInterval(timer);
   }, [quizStarted, remainingTime]);
@@ -103,14 +104,14 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
 
   const startQuiz = () => setQuizStarted(true);
 
-  const submitQuiz = async () => {
+  const submitQuiz = async (isTimeUp = false) => {
     try {
       const answersArray = Object.entries(userAnswers).map(([questionId, selectedOption]) => ({
         questionId,
         selectedOption,
       }));
 
-      if (answersArray.length !== quizQuestions.length) {
+      if (!isTimeUp && answersArray.length !== quizQuestions.length) {
         alert("Please answer all questions before submitting.");
         return;
       }
@@ -131,7 +132,7 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
             attemptedQuizzes: [...(user.attemptedQuizzes || []), quizDetails._id],
           })
         );
-        navigate("/quiz-results", { state: { score: response.data.score, total: quizQuestions.length } });
+        navigate("/quiz-results", { state: { quizTitle: quizDetails.title } });
       } else {
         throw new Error("Invalid response from the server.");
       }
