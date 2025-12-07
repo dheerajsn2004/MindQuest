@@ -6,19 +6,18 @@ const { CREATE_QUIZ, UPDATE_QUIZ, DELETE_QUIZ } = quizEndpoints;
 
 export const createQuiz = async (data, token) => {
   try {
-    const response = await apiConnector("POST", CREATE_QUIZ, data, {
-      Authorization: `Bearer ${token}`,
-    });
+    const response = await apiConnector("POST", CREATE_QUIZ, data);
 
     if (!response?.data?.success) {
       throw new Error(response.data.error);
     }
 
     console.log("CREATE_QUIZ_RESPONSE : ", response);
-
+    toast.success("Quiz created successfully");
     return response?.data?.data;
   } catch (e) {
     console.log("ERROR WHILE CREATING QUIZ : ", e);
+    toast.error(e?.response?.data?.error || "Failed to create quiz");
   }
   return null;
 };
@@ -28,10 +27,7 @@ export const updateQuiz = async (data, token, quizId) => {
     const response = await apiConnector(
       "PUT",
       `${UPDATE_QUIZ}/${quizId}`,
-      data,
-      {
-        Authorization: `Bearer ${token}`,
-      }
+      data
     );
 
     if (!response?.data?.success) {
@@ -43,6 +39,7 @@ export const updateQuiz = async (data, token, quizId) => {
     return response.data.data;
   } catch (e) {
     console.log("ERROR WHILE UPDATING QUIZ : ", e);
+    toast.error(e?.response?.data?.error || "Failed to update quiz");
   }
   return null;
 };
@@ -51,11 +48,7 @@ export const deleteQuiz = async (quizId, token) => {
   try {
     const response = await apiConnector(
       "DELETE",
-      `${DELETE_QUIZ}/${quizId}`,
-      null,
-      {
-        Authorization: `Bearer ${token}`,
-      }
+      `${DELETE_QUIZ}/${quizId}`
     );
 
     if (!response?.data?.success) {
@@ -67,6 +60,7 @@ export const deleteQuiz = async (quizId, token) => {
     return true
   } catch (e) {
     console.log("ERROR WHILE DELETING QUIZ : ", e);
+    toast.error(e?.response?.data?.error || "Failed to delete quiz");
   }
   return false;
 };
