@@ -22,18 +22,16 @@ const AttemptCard = ({ item }) => {
                 <span className='text-xs md:text-base text-end font-thin text-slate-300'>{createdAt}</span>
             </div>
 
-            {/* Score Display */}
-            <div>
-                <h3 className='flex items-center justify-center gap-3 text-base md:text-xl my-3'>
-                    Score 
-                    <span className='text-xl md:text-3xl font-semibold'>
-                        <span className={`${score / totalQuestions >= 0.4 ? "text-green-500" : "text-red-700"}`}>
-                            {score}
-                        </span> / {totalQuestions}
-                    </span>
-                </h3>
+            {/* Status Message */}
+            <div className='bg-slate-800 border border-slate-600 rounded-lg p-4 my-3'>
+                <p className='text-center text-gray-300'>
+                    Quiz completed successfully!
+                </p>
+                <p className='text-center text-sm text-gray-400 mt-1'>
+                    Results will be announced soon
+                </p>
             </div>
-            {/* navigate(`../../quiz/${item?.quizId?._id}`) */}
+
             {/* Attempt Again Button */}
             <Button 
                 onClick={() =>'#'} 
