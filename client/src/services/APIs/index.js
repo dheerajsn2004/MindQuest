@@ -1,4 +1,8 @@
-const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:3005/api/v1";
+// Use environment variable if available, otherwise use deployed backend URL
+const BASE_URL = import.meta.env.VITE_BASE_URL || 
+                 (window.location.hostname === 'localhost' 
+                   ? "http://localhost:3005/api/v1" 
+                   : "https://mindquest-qrh5.onrender.com/api/v1");
 
 export const authEndpoints = {
   SIGNUP: `${BASE_URL}/register`,
