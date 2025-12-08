@@ -148,7 +148,7 @@ exports.getQuizById = async (req, res) => {
 exports.attemptQuiz = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { quizId, answers } = req.body;
+    const { quizId, answers, startedAt } = req.body;
 
     const quiz = await Quiz.findById(quizId);
     if (!quiz) {
@@ -176,11 +176,22 @@ exports.attemptQuiz = async (req, res) => {
       }
     }
 
+    const completedAt = new Date();
+    let timeTaken = null;
+    
+    if (startedAt) {
+      const startTime = new Date(startedAt);
+      timeTaken = Math.floor((completedAt - startTime) / 1000); // time in seconds
+    }
+
     const attempt = new Attempt({
       userId,
       quizId,
       score,
       answers: answersArray,
+      startedAt: startedAt ? new Date(startedAt) : null,
+      completedAt,
+      timeTaken
     });
     await attempt.save();
 

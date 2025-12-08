@@ -29,9 +29,17 @@ const attemptSchema = new mongoose.Schema({
         }
       }
     ],
+    startedAt: {
+      type: Date,
+      default: null
+    },
     completedAt: {
       type: Date,
       default: Date.now
+    },
+    timeTaken: {
+      type: Number,
+      default: null
     }
   }, { timestamps: true });
   

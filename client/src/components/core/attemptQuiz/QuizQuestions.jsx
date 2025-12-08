@@ -11,6 +11,7 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
   const [quizStarted, setQuizStarted] = useState(false);
   const [remainingTime, setRemainingTime] = useState(null);
   const [userAnswers, setUserAnswers] = useState({});
+  const [quizStartTime, setQuizStartTime] = useState(null);
   const { token, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
     const savedState = localStorage.getItem(storageKey);
     if (savedState) {
       try {
-        const { started, timeRemaining, answers, timestamp } = JSON.parse(savedState);
+        const { started, timeRemaining, answers, timestamp, startTime } = JSON.parse(savedState);
         
         // Calculate elapsed time since last save
         const elapsedSeconds = Math.floor((Date.now() - timestamp) / 1000);
@@ -35,6 +36,7 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
           setQuizStarted(started);
           setRemainingTime(adjustedTime);
           setUserAnswers(answers);
+          setQuizStartTime(startTime);
         } else {
           // Time expired while away, clear storage and auto-submit
           localStorage.removeItem(storageKey);
@@ -59,7 +61,8 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
         started: quizStarted,
         timeRemaining: remainingTime,
         answers: userAnswers,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        startTime: quizStartTime
       };
       localStorage.setItem(storageKey, JSON.stringify(stateToSave));
     }
@@ -102,7 +105,10 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
     }));
   }, []);
 
-  const startQuiz = () => setQuizStarted(true);
+  const startQuiz = () => {
+    setQuizStarted(true);
+    setQuizStartTime(new Date().toISOString());
+  };
 
   const submitQuiz = async (isTimeUp = false) => {
     try {
@@ -119,7 +125,11 @@ const QuizQuestions = ({ quizDetails, quizQuestions }) => {
       const response = await apiConnector(
         "POST",
         `${quizEndpoints.ATTEMMP_QUIZ}/${quizDetails._id}/attempt`,
-        { quizId: quizDetails._id, answers: answersArray }
+        { 
+          quizId: quizDetails._id, 
+          answers: answersArray,
+          startedAt: quizStartTime
+        }
       );
 
       if (response?.data?.score !== undefined) {
